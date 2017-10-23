@@ -10,6 +10,7 @@ COPY scripts/ 			/usr/local/bin/
 COPY config/supervisord.conf 	/etc/supervisord.conf
 
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
+RUN mkdir /var/log/workers
 
 VOLUME /var/www/html
 
