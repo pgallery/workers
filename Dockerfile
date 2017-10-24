@@ -5,7 +5,7 @@ LABEL version="1.0 beta"
 LABEL description="Docker image PHP-CLI 7.1 and Workers pGallery"
 
 RUN apt-get update && apt-get -y upgrade \
-    && apt-get install -y git supervisor \
+    && apt-get install -y supervisor \
     && mkdir /var/log/workers
 
 COPY scripts/ 			/usr/local/bin/
