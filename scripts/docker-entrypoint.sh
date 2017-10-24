@@ -46,6 +46,8 @@ chown www-data:www-data /var/www -R
 
 if [ ! -f /var/www/html/install.lock ]; then
 
+    BRANCH=${BRANCH:-master}
+
     DB_PORT=${DB_PORT:-3306}
     DB_CONNECTION=${DB_CONNECTION:-mysql}
     MEMCACHED_PORT=${MEMCACHED_PORT:-11211}
@@ -60,7 +62,7 @@ if [ ! -f /var/www/html/install.lock ]; then
     CACHE_DRIVER=${CACHE_DRIVER:-file}
     SESSION_DRIVER=${SESSION_DRIVER:-file}
 
-    su -s /bin/bash - www-data -c "cd /var/www/html/ && git clone https://github.com/pgallery/gallery && \
+    su -s /bin/bash - www-data -c "cd /var/www/html/ && git clone -b ${BRANCH} https://github.com/pgallery/gallery && \
         cd /var/www/html/gallery && composer install && composer update && cp .env.example .env && \
         php artisan key:generate"
 
