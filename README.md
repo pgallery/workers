@@ -30,6 +30,12 @@ docker run -d -p 80:80 -p 443:443 \
     -v /home/username/sitename/www/:/var/www/html/ \
     -v /home/username/sitename/logs/:/var/log/nginx/ \
     pgallery/nginx
+
+docker run -d --name workers \
+    -v /home/username/sitename/www/:/var/www/html/ \
+    -v /home/username/sitename/logs/:/var/log/workers/ \
+    pgallery/workers
+
 ```
 
 ## Доступные параметры конфигурации
