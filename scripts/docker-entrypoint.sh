@@ -62,7 +62,7 @@ if [ ! -f /var/www/html/install.lock ]; then
     CACHE_DRIVER=${CACHE_DRIVER:-file}
     SESSION_DRIVER=${SESSION_DRIVER:-file}
 
-    su -s /bin/bash - www-data -c "cd /var/www/html/ && git clone -b ${BRANCH} https://github.com/pgallery/gallery && \
+    su -s /bin/bash - www-data -c "cd /var/www/html/ && git clone -b ${BRANCH} --single-branch https://github.com/pgallery/gallery && \
         cd /var/www/html/gallery && composer install && composer update && cp .env.example .env && \
         php artisan key:generate"
 
