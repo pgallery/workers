@@ -16,11 +16,15 @@ PHP_TIMEZONE=${PHP_TIMEZONE:-Europe/Moscow}
 PHP_UPLOAD_MAX_FILEZIZE=${PHP_UPLOAD_MAX_FILEZIZE:-256}
 PHP_MAX_FILE_UPLOADS=${PHP_MAX_FILE_UPLOADS:-250}
 
+WORKERS_NUMBER=${WORKERS_NUMBER:-4}
+
 PHP_TZ=`echo ${PHP_TIMEZONE} |sed  's|\/|\\\/|g'`
 
 # set timezone
 ln -snf /usr/share/zoneinfo/${PHP_TIMEZONE} /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
+
+sed -i -e "s/WORKERS_NUMBER/${WORKERS_NUMBER}/g" /etc/supervisord.conf
 
 if [ -f /var/www/html/config/php/php.ini ]; then
     cp /var/www/html/config/php/php.ini ${PHPINI}
