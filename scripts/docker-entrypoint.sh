@@ -55,7 +55,11 @@ if [ ! -f /var/www/html/install.lock ]; then
     DB_PORT=${DB_PORT:-3306}
     DB_CONNECTION=${DB_CONNECTION:-mysql}
     MEMCACHED_PORT=${MEMCACHED_PORT:-11211}
+
     REDIS_PORT=${REDIS_PORT:-6379}
+    REDIS_PASSWORD=${REDIS_PASSWORD:-null}
+
+    IMAGE_DRIVER=${IMAGE_DRIVER:-imagick}
 
     RABBITMQ_PORT=${RABBITMQ_PORT:-5672}
     RABBITMQ_VHOST=${RABBITMQ_VHOST:-/}
@@ -79,6 +83,7 @@ if [ ! -f /var/www/html/install.lock ]; then
         -e "s/DB_DATABASE=homestead/DB_DATABASE=${DB_DATABASE}/g" \
         -e "s/DB_USERNAME=homestead/DB_USERNAME=${DB_USERNAME}/g" \
         -e "s/DB_PASSWORD=secret/DB_PASSWORD=${DB_PASSWORD}/g" \
+        -e "s/IMAGE_DRIVER=gd/IMAGE_DRIVER=${IMAGE_DRIVER}/g" \
         -e "s/CACHE_DRIVER=file/CACHE_DRIVER=${CACHE_DRIVER}/g" \
         -e "s/SESSION_DRIVER=file/SESSION_DRIVER=${SESSION_DRIVER}/g" \
         -e "s/QUEUE_DRIVER=sync/QUEUE_DRIVER=${QUEUE_DRIVER}/g" \
@@ -110,12 +115,7 @@ if [ ! -f /var/www/html/install.lock ]; then
         sed -i \
             -e "s/REDIS_HOST=/REDIS_HOST=${REDIS_HOST}/g" \
             -e "s/REDIS_PORT=/REDIS_PORT=${REDIS_PORT}/g" \
-            /var/www/html/gallery/.env
-    fi
-
-    if [ !-n ${REDIS_PASSWORD} ] && [ -n ${REDIS_HOST} ]; then
-        sed -i \
-            -e "s/REDIS_PASSWORD=/#REDIS_PASSWORD=/g" \
+            -e "s/REDIS_PASSWORD=/REDIS_PASSWORD=${REDIS_PASSWORD}/g" \
             /var/www/html/gallery/.env
     fi
 
