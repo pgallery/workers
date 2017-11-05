@@ -91,15 +91,24 @@ if [ ! -f /var/www/html/install.lock ]; then
         -e "s/QUEUE_DRIVER=sync/QUEUE_DRIVER=${QUEUE_DRIVER}/g" \
         /var/www/html/gallery/.env
 
-    if [ ${DISK_DRIVER} == 'aws' ]; then
+    if [ ${DISK_DRIVER} == 'bizmrg' ]; then
         sed -i \
             -e "s/AWS_ENDPOINT=/AWS_ENDPOINT=${AWS_ENDPOINT}/g" \
+            -e "s/AWS_KEY=/AWS_KEY=${AWS_KEY}/g" \
+            -e "s/AWS_SECRET=/AWS_SECRET=${AWS_SECRET}/g" \
+            -e "s/AWS_BUCKET=/AWS_BUCKET=${AWS_BUCKET}/g" \
+            /var/www/html/gallery/.env
+    fi
+
+    if [ ${DISK_DRIVER} == 's3' ]; then
+        sed -i \
             -e "s/AWS_KEY=/AWS_KEY=${AWS_KEY}/g" \
             -e "s/AWS_SECRET=/AWS_SECRET=${AWS_SECRET}/g" \
             -e "s/AWS_REGION=/AWS_REGION=${AWS_REGION}/g" \
             -e "s/AWS_BUCKET=/AWS_BUCKET=${AWS_BUCKET}/g" \
             /var/www/html/gallery/.env
     fi
+
 
     if [ -n ${MEMCACHED_HOST} ]; then
         sed -i \
