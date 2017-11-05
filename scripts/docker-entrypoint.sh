@@ -60,6 +60,7 @@ if [ ! -f /var/www/html/install.lock ]; then
     REDIS_PASSWORD=${REDIS_PASSWORD:-null}
 
     IMAGE_DRIVER=${IMAGE_DRIVER:-imagick}
+    DISK_DRIVER=${DISK_DRIVER:-local}
 
     RABBITMQ_PORT=${RABBITMQ_PORT:-5672}
     RABBITMQ_VHOST=${RABBITMQ_VHOST:-/}
@@ -84,10 +85,21 @@ if [ ! -f /var/www/html/install.lock ]; then
         -e "s/DB_USERNAME=homestead/DB_USERNAME=${DB_USERNAME}/g" \
         -e "s/DB_PASSWORD=secret/DB_PASSWORD=${DB_PASSWORD}/g" \
         -e "s/IMAGE_DRIVER=gd/IMAGE_DRIVER=${IMAGE_DRIVER}/g" \
+        -e "s/DISK_DRIVER=local/DISK_DRIVER=${DISK_DRIVER}/g" \
         -e "s/CACHE_DRIVER=file/CACHE_DRIVER=${CACHE_DRIVER}/g" \
         -e "s/SESSION_DRIVER=file/SESSION_DRIVER=${SESSION_DRIVER}/g" \
         -e "s/QUEUE_DRIVER=sync/QUEUE_DRIVER=${QUEUE_DRIVER}/g" \
         /var/www/html/gallery/.env
+
+    if [ ${DISK_DRIVER} == 'aws' ]; then
+        sed -i \
+            -e "s/AWS_ENDPOINT=/AWS_ENDPOINT=${AWS_ENDPOINT}/g" \
+            -e "s/AWS_KEY=/AWS_KEY=${AWS_KEY}/g" \
+            -e "s/AWS_SECRET=/AWS_SECRET=${AWS_SECRET}/g" \
+            -e "s/AWS_REGION=/AWS_REGION=${AWS_REGION}/g" \
+            -e "s/AWS_BUCKET=/AWS_BUCKET=${AWS_BUCKET}/g" \
+            /var/www/html/gallery/.env
+    fi
 
     if [ -n ${MEMCACHED_HOST} ]; then
         sed -i \
@@ -97,7 +109,7 @@ if [ ! -f /var/www/html/install.lock ]; then
             -e "s/MEMCACHED_PASSWORD=/MEMCACHED_PASSWORD=${MEMCACHED_PASSWORD}/g" \
             /var/www/html/gallery/.env
     fi
-    
+
     if [ -n ${RABBITMQ_HOST} ]; then
 
         RABBITMQ_VHOST_TAG=`echo ${RABBITMQ_VHOST} |sed  's|\/|\\\/|g'`
@@ -110,7 +122,7 @@ if [ ! -f /var/www/html/install.lock ]; then
             -e "s/RABBITMQ_PASSWORD=/RABBITMQ_PASSWORD=${RABBITMQ_PASSWORD}/g" \
             /var/www/html/gallery/.env
     fi
-    
+
     if [ -n ${REDIS_HOST} ]; then
         sed -i \
             -e "s/REDIS_HOST=/REDIS_HOST=${REDIS_HOST}/g" \
