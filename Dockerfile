@@ -11,8 +11,9 @@ RUN apt-get update && apt-get -y upgrade \
 COPY scripts/ 			/usr/local/bin/
 COPY config/supervisord.conf 	/etc/supervisord.conf
 
-RUN chmod 755 /usr/local/bin/docker-entrypoint.sh
-RUN chmod 755 /usr/local/bin/pgallery-update.sh
+RUN chmod 755 /usr/local/bin/docker-entrypoint.sh \
+    && chmod 755 /usr/local/bin/pgallery-update.sh \
+    && chmod 755 /usr/local/bin/pgallery-clear.sh
 
 VOLUME /var/www/html
 
