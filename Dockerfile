@@ -13,7 +13,8 @@ COPY config/supervisord.conf 	/etc/supervisord.conf
 
 RUN chmod 755 /usr/local/bin/docker-entrypoint.sh \
     && chmod 755 /usr/local/bin/pgallery-update.sh \
-    && chmod 755 /usr/local/bin/pgallery-clear.sh
+    && chmod 755 /usr/local/bin/pgallery-clear.sh \
+    && chmod 755 /usr/local/bin/artisan.sh
 
 VOLUME /var/www/html
 
