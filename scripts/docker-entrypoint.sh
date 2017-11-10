@@ -154,6 +154,3 @@ if [ ! -f /var/www/html/install.lock ]; then
 fi
 
 /usr/bin/supervisord -n -c /etc/supervisord.conf
-
-
-exec "$@"
