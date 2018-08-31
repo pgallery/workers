@@ -1,7 +1,7 @@
 FROM pgallery/php:latest
 
 LABEL maintainer="Ruzhentsev Alexandr <git@pgallery.ru>"
-LABEL version="1.0 beta"
+LABEL version="1.1"
 LABEL description="Docker image PHP-CLI 7.1 and Workers pGallery"
 
 RUN apt-get update && apt-get -y upgrade \
