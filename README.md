@@ -1,6 +1,6 @@
 ## Описание
 
-Это Dockerfile, позволяющие собрать простой образ для Docker с PHP-CLI 7.1 для запуска воркеров Laravel проекта pGallery.
+Это Dockerfile, позволяющие собрать простой образ для Docker с PHP-CLI 7.1, 7.2 или 7.3 для запуска воркеров Laravel проекта pGallery.
 
 Собран на основе образа: [https://github.com/pgallery/php](https://github.com/pgallery/php)
 
